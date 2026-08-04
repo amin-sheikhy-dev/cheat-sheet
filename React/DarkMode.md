@@ -85,14 +85,6 @@ useEffect(() => {
   }
 }, [theme]);
 
-return (
-  // دکمه تغییر تم
-  <>
-    <button onClick={toggleTheme}>{theme === 'light' ? 'Dark 🌙' : 'Light ☀️'}</button>
-    <button className="bg-white text-black dark:bg-gray-900 dark:text-white" onClick={logout}>
-      Logout
-    </button>
-  </>
-  // استفاده از کلاس دارک در داخل المنت ها
-);
+// دکمه تغییر تم
+return <button onClick={toggleTheme}>{theme === 'light' ? 'Dark 🌙' : 'Light ☀️'}</button>;
 ```
