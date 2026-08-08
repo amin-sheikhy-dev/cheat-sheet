@@ -25,7 +25,7 @@ export default {
 
 @layer base {
   body {
-    @apply bg-white dark:bg-gray-900;
+    @apply bg-white dark:bg-black;
   }
 }
 ```
@@ -43,7 +43,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface ThemeStoreType {
-  theme: string;
+  theme: 'light' | 'dark';
   toggleTheme: () => void;
 }
 
@@ -53,11 +53,11 @@ export const useThemeStore = create<ThemeStoreType>()(
       theme: 'dark', // ساخت مقدار اولیه برای استور - ولی چون در لوکال استوریج ذخیره میشه دفعات بعد از اونجا مقدار میگیره
 
       // ساخت تابع تاگل تم
-      toggleTheme: () => set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
+      toggleTheme() {
+        set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' }));
+      },
     }),
-    {
-      name: 'theme-storage',
-    }
+    { name: 'theme' }
   )
 );
 ```
@@ -86,5 +86,5 @@ useEffect(() => {
 }, [theme]);
 
 // دکمه تغییر تم
-return <button onClick={toggleTheme}>{theme === 'light' ? 'Dark 🌙' : 'Light ☀️'}</button>;
+return <button onClick={toggleTheme}>{theme === 'light' ? '🌙' : '☀️'}</button>;
 ```

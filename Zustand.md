@@ -1,31 +1,3 @@
-### ThemeStore
-
-```ts
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-
-interface ThemeStoreType {
-  theme: string;
-  toggleTheme: () => void;
-}
-
-export const useThemeStore = create<ThemeStoreType>()(
-  persist(
-    (set) => ({
-      theme: 'dark', // ساخت مقدار اولیه برای استور - ولی چون در لوکال استوریج ذخیره میشه دفعات بعد از اونجا مقدار میگیره
-
-      // ساخت تابع تاگل تم
-      toggleTheme() {
-        set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' }));
-      },
-    }),
-    { name: 'theme-storage' }
-  )
-);
-```
-
----
-
 ### AuthStore
 
 ```ts

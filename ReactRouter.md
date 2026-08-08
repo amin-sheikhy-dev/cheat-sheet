@@ -18,13 +18,6 @@ const router = createBrowserRouter([
         element: <Home />,
       },
 
-      // یک تابع است که قبل از اینکه کامپوننت صفحه رندر شود صدا زده می‌شود و داده‌ها را آماده می‌کند loader
-      // و داخل کامپوننت هم باید دیتارو بگیریم
-      {
-        path: '/product',
-        element: <Product />,
-      },
-
       {
         path: '/login',
         element: <Login />,
@@ -57,11 +50,6 @@ const router = createBrowserRouter([
           { path: '/about/you', element: <AboutYou /> },
           { path: '/about/me', element: <AboutMe /> },
         ],
-      },
-
-      {
-        path: '/about/us',
-        element: <AboutUs />,
       },
 
       {
@@ -116,6 +104,73 @@ export default function About() {
       <Outlet />
 
       <Link to="/about/us">about us Component :D</Link>
+    </div>
+  );
+}
+```
+
+### داینامیک روت
+
+```tsx
+import { useQuery } from '@tanstack/react-query';
+import { fetchMeals } from '../lib/api';
+import { Link } from 'react-router-dom';
+
+export default function Menu() {
+  const { data, isPending, isError, error } = useQuery({
+    queryKey: ['meals'],
+    queryFn: fetchMeals,
+  });
+
+  if (isPending) {
+    return <p>Loading...</p>;
+  }
+
+  if (isError) {
+    return <p>{error.message}</p>;
+  }
+
+  // console.log(data);
+
+  return (
+    <div className="dark:text-white">
+      {data.meals?.map((m) => (
+        <div key={m.idMeal}>
+          <Link to={`/menu/${m.idMeal}`}>{m.strMeal}</Link>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+```tsx
+import { useParams } from 'react-router-dom';
+import { getMeal } from '../lib/api';
+
+export default function MenuItem() {
+  const { id } = useParams();
+  const [meal, setMeal] = useState<{ meals: Record<string, string>[] } | null>(null);
+
+  useEffect(() => {
+    async function loadMeal() {
+      if (!id) return;
+
+      const data = await getMeal(id);
+
+      setMeal(data);
+    }
+
+    loadMeal();
+  }, [id]);
+
+  // console.log(meal);
+
+  return (
+    <div className="dark:text-white">
+      <p>id={id}</p>
+
+      <p>{meal?.meals?.[0].strMeal}</p>
     </div>
   );
 }

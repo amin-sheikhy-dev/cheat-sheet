@@ -1,105 +1,84 @@
 ```js
-/*
-  برای انتخاب یک کلس نقطه . میزاریم دقیقا مثل انتخاب کردن تو سی سی اس میمونه
-? document.querySelector('.element')
+document.querySelector('.element');
+// برای انتخاب یک کلس نقطه . میزاریم دقیقا مثل انتخاب کردن تو سی سی اس میمونه
 
-  انتخاب عنصر ایدی دار
-  تکست کانتنت محتوای متنو میده
-? document.querySelector('#element').textContent
+// انتخاب عنصر ایدی دار
+// تکست کانتنت محتوای متنو میده
+document.querySelector('#element').textContent;
 
-  برای انتخاب مقادیر اینپوت ها
-? document.querySelector('.element').value = 23
+// برای انتخاب مقادیر اینپوت ها
+document.querySelector('.element').value = 23;
 
-  اد ایونت لیستنر
-? element.addEventListener(type, listener);
-? element.addEventListener(type, listener, options);
+element.addEventListener(type, listener);
+// type =   "click"   "keydown"   "submit"   "mouseenter"
 
-type =   "click"   "keydown"   "submit"   "mouseenter"
-
-
-anonymos function = فانکشن بدون اسم چون بعضی فانکشن های ایونت لیستنر اسم ندارن
-
-? document.querySelector('.element').addEventListener('click', () => {
-  اگه روی عنصر اچ تی ام ال کلیک شد و بعدش عملی که خواستی انجام بشه
-}
-
-دستکاری کردن استایل های سی اس اس
-اول المنت سلکت میشه و بعدش استایل بعدشم اون استایلی که خاستی
-هر زمان بخاییم استایل دستکاری کنیم باید استرینگ وارد کنیم
-? document.querySelector('element').style.backgroundColor = '#fff9c4'
-
-فوکوس خودکار روی اون اینپوت یا چیزی ک میخاییم
-? document.querySelector('.element').focus()
-
-همیشه اولین عنصری که این کلاسو داره سلکت میکنه اگه بخای همرو انتخاب کنه باید آل بدی بهش
-? document.querySelector('.element')
-
-به ما یک نودلیست میدهد که رفتاری شبیه ارایه دارد
-? document.querySelectorAll('.element')
-
-for (let i = 0; i < element.length; i++){
-  console.log(element[i].textContent)   یعنی میشه توش لوپ کرد
-}
-
-
-
-همیشه یادت باشه به کلس لیست ها نقطه اول استرینگ ندی
-اولین عنصری که کلاس مدال داره رو سلکت کن برو داخل لیست کلاس های و کلاس هیدن رو حذف کن
-? document.querySelector('.modal').classList.remove('hidden') حواست باشه یوقت نقطه نزاری توش
-
-مثال
-HTML => <div class="box red big square"> ...... </div>
-
-? const box = document.querySelector('.box')
-
-? box.classList.add('circle')            اضافه می‌کنه
-? box.classList.remove('red')            حذف می‌کنه
-? box.classList.toggle('big')            اگر بود حذف می‌کنه اگر نبود اضافه می‌کنه
-? box.classList.contains('square')       true یا false
-
-
-
- | Event      | زمانی اجرا می‌شه                                         |
- |============|========================================================|
- |  keydown   |      وقتی کاربر یه کلید فشار می‌ده(همون لحظه)             |
- |  keypress  | تا زمانی که کلید فشرده باشد داعما اجرا میشه و یکمی قدیمیه  |
- |  keyup     |                 وقتی کاربر کلید رو رها می‌کنه             |
- |============|======================================================|
-
-? document.addEventListener('keydown', (e) => {
-
-  هروقت دکمه ای کلیک شه جاوااسکریپت یه ابجکت ارسال میکنه ک اینجوری میتونی ببینش
-? console.log(e) 
-
-  حالا از اون ابجکت میاییم مقدار کلید رو برمیداریم تا بفهمیم چی کلیک شده
-? console.log(e.key)
-
-  هروقت اسکیپ کلیک شد این تو کنسول تایپ میشه
-? if (e.key === 'Escape') console.log('Escape clicked') 
-
-})
-
-مثلا وقتی فقط اسکیپ کلیک شد این اتفاق بیفته
-? document.addEventListener('keydown', (e) => {
-
-  if (e.key === 'Escape') {
-    console.log('Escape clicked')
-  }
-})
-
-عوض کردن سورس یک المنت
-? document.querySelector('.element').src = ''
-
-
-document.querySelector('.Element').addEventListener('click', (e) => {
- چون رفتار دیفالت مرورگر اینه وقتی یه فرم سابمیت میشه صفحه ریلود شه پس ما اینو میزاریم اینجوری نشه
-?  e.preventDefault()
+document.querySelector('.element').addEventListener('click', () => {
+  // اگه روی عنصر اچ تی ام ال کلیک شد و بعدش عملی که خواستی انجام بشه
 });
 
+// دستکاری کردن استایل های سی اس اس
+// اول المنت سلکت میشه و بعدش استایل بعدشم اون استایلی که خاستی
+// هر زمان بخاییم استایل دستکاری کنیم باید استرینگ وارد کنیم
+document.querySelector('.element').style.backgroundColor = '#fff9c4';
 
-? element.insertAdjacentHTML(position, text)
-کد بنویسی HTML رو نسبت به یه المنت ایجاد کنی بدون اینکه دستی توی HTML باعث میشه خیلی راحت کد
+// فوکوس خودکار روی اون اینپوت یا چیزی ک میخاییم
+document.querySelector('.element').focus();
 
+// همیشه اولین عنصری که این کلاسو داره سلکت میکنه اگه بخای همرو انتخاب کنه باید آل بدی بهش
+document.querySelector('.element');
+
+// به ما یک نودلیست میدهد که رفتاری شبیه ارایه دارد
+document.querySelectorAll('.element');
+
+for (let i = 0; i < element.length; i++) {
+  console.log(element[i].textContent); // یعنی میشه توش لوپ کرد
+}
+
+// همیشه یادت باشه به کلس لیست ها نقطه اول استرینگ ندی
+// اولین عنصری که کلاس مدال داره رو سلکت کن برو داخل لیست کلاس های و کلاس هیدن رو حذف کن
+document.querySelector('.modal').classList.remove('hidden'); // حواست باشه یوقت نقطه نزاری توش
+
+// مثال
+<div class="box red big square">......</div>;
+
+const box = document.querySelector('.box');
+
+box.classList.add('circle'); // اضافه می‌کنه
+box.classList.remove('red'); // حذف می‌کنه
+box.classList.toggle('big'); // اگر بود حذف می‌کنه اگر نبود اضافه می‌کنه
+box.classList.contains('square'); // true یا false
+
+/*
+| Event      | زمانی اجرا می‌شه                                         |
+|============|========================================================|
+|  keydown   |      وقتی کاربر یه کلید فشار می‌ده(همون لحظه)             |
+|  keypress  | تا زمانی که کلید فشرده باشد داعما اجرا میشه و یکمی قدیمیه  |
+|  keyup     |                 وقتی کاربر کلید رو رها می‌کنه             |
+|============|======================================================|*/
+
+document.addEventListener('keydown', (e) => {
+  // هروقت دکمه ای کلیک شه جاوااسکریپت یه ابجکت ارسال میکنه ک اینجوری میتونی ببینش
+  console.log(e);
+
+  // حالا از اون ابجکت میاییم مقدار کلید رو برمیداریم تا بفهمیم چی کلیک شده
+  console.log(e.key);
+
+  // هروقت اسکیپ کلیک شد این تو کنسول تایپ میشه
+  if (e.key === 'Escape') console.log('Escape clicked');
+});
+
+// عوض کردن سورس یک المنت
+document.querySelector('.element').src = '';
+
+document.querySelector('.Element').addEventListener('click', (e) => {
+  e.preventDefault();
+  // چون رفتار دیفالت مرورگر اینه وقتی یه فرم سابمیت میشه صفحه ریلود شه پس ما اینو میزاریم اینجوری نشه
+});
+
+element.insertAdjacentHTML(position, text);
+// کد بنویسی HTML رو نسبت به یه المنت ایجاد کنی بدون اینکه دستی توی HTML باعث میشه خیلی راحت کد
+
+/*
 position:
   "beforebegin"  →  قبل از خود المنت
   "afterend"     →  بعد از خود المنت
@@ -111,27 +90,32 @@ text: → که میخای تولید شه رو داخل یک استرینگ می
 
 const divTag = document.querySelector('.divTag');
 
-// .createElement('')
+// .createElement('')_________________________________________
+
 // و اضافه کردن کلس و ست کردن متن براش EL ساخت یک
 const message = document.createElement('button');
 message.classList.add('el');
 message.textContent = 'fake EL';
 
-// .prepend()
+// .prepend()_________________________________________
+
 // این متد اون المنتی که ساخته بودیم رو به عنوان اولین چایلد اون تگ ست میکنه
 divTag.prepend(message);
 
-// .append()
+// .append()_________________________________________
+
 // دقیقا مثل متد بالا فقط به عنوان چایلد اخر میده اینو
 
-// .cloneNode( Boolean )
+// .cloneNode( Boolean )_________________________________________
+
 divTag.append(message.cloneNode(true));
 // کپی ساختیم از همون EL حالا دقیقا یه
 // وقتی ترو بدیم یعنی تمام چایلد هاش رو هم کپی میکنه
 
 // رو جا به جا کنند HTML میتونن المنت های موجود در یک صفحه append و prepend اینو 2 تا متد
 
-// .after()
+// .after()_________________________________________
+
 // .before()
 // قبل و بعد خود تگ میزارن before و after متد
 divTag.after(message.cloneNode(true));
@@ -140,24 +124,24 @@ divTag.before(message.cloneNode(true));
 // اینه که داخل نسبت به خود تگ جا به جا میکنن prepend,append با متد های after,before تفاوت متد
 // داخل خود تگ جا به جا میکنن prepend و append ولی متد های
 
-// .remove()
+// .remove()_________________________________________
+
 // حذف یک المنت
 document.querySelector('.el3').addEventListener('click', () => document.querySelector('.el3').remove());
 
-// Attributes
-/*
+// Attributes_________________________________________
+
 <meta
   class="meta"
   atr1="contentAtr1"
   id="metaID"
   name="viewport"
   content="width=device-width, initial-scale=1.0"
-
   data-version-number="3.0"
   data-user-id="123"
   data-role="admin"
-/>
-*/
+/>;
+
 // HTML گرفتن اتریبیوت ها از
 const Element = document.querySelector('.meta');
 Element.name; // viewport
@@ -177,19 +161,21 @@ Element.getAttribute('atr1'); // contentAtr1
 // ساخت اتریبیوت و ست کردن مقدار براش
 Element.setAttribute('atr2', 'contentAtr2'); // ورودی اول اتریبیوت و دومی مقدارش
 
-// Data attributes
-// <button data-version-number="3.0" data-user-id="123" data-role="admin"> </button>
+// Data attributes_________________________________________
+
+<button data-version-number="3.0" data-user-id="123" data-role="admin"></button>;
 Element.dataset.versionNumber; // 3.0
 Element.dataset.userId; // 123
 Element.dataset.role; // admin
 
-// Classes
+// Classes_________________________________________
+
 Element.classList.add('c', 'j');
 Element.classList.remove('c', 'j');
 Element.classList.toggle('c'); // چک میکنه اگه بود حذف کنه نبود اضافه کنه
 Element.classList.contains('c'); // ریترن میکنه false یا true در ارایه ها عمل میکنه یعنی includes شبیه
 
-// Position Element
+// Position Element_________________________________________
 const component10 = document.querySelector('.component10');
 const wlcElement = document.querySelector('.wlc');
 const El2 = document.querySelector('.el2');

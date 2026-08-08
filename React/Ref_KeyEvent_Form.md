@@ -45,7 +45,7 @@ function Search({ query, setQuery }) {
   useEffect(() => {
     function callback(e) {
       // اول مشخص کن کدوم دکمه فشرده شده
-      if (e.code === 'Enter') {
+      if (e.key === 'Enter') {
         // هر کدی که خاستی داخل این مینویسی
         searchInput.current.focus();
 
@@ -70,13 +70,13 @@ function Search({ query, setQuery }) {
 
 این یک Custom Hook هست که به شما اجازه میده به فشرده شدن یک کلید خاص گوش بدید و یک تابع (action) رو اجرا کنید.
 
-تابع callback هر بار که کاربر کلیدی رو فشار میده اجرا میشه و اگه e.code با کلید مورد نظر (key) یکی باشه، action() رو صدا میزنه.
+تابع callback هر بار که کاربر کلیدی رو فشار میده اجرا میشه و اگه e.key با کلید مورد نظر (key) یکی باشه، action() رو صدا میزنه.
 
 ```jsx
 function useKey(key, action) {
   useEffect(() => {
     const callback = function (e) {
-      if (e.code.toLowerCase() === key.toLowerCase()) action();
+      if (e.key.toLowerCase() === key.toLowerCase()) action();
     };
 
     document.addEventListener('keydown', callback);

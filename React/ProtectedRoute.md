@@ -18,12 +18,16 @@ export const useAuthStore = create<AuthStoreType>()(
       // توجه شود که چون در لوکال استوریج ذخیره میشه پس بعد از اینکه یکبار از تابع لاگین استفاده شه و مقدار ترو شه دیگه فالس نمیشه
       // مگه اینکه با تابع لاگ اوت دوباره فالس شه یعنی در کل فقط با تابع میتونی مقدار آن را عوض کرد نه هیچ چیز دیگه
       isLoggedIn: false,
-      login: () => set({ isLoggedIn: true }),
-      logout: () => set({ isLoggedIn: false }),
+
+      login() {
+        set({ isLoggedIn: true });
+      },
+
+      logout() {
+        set({ isLoggedIn: false });
+      },
     }),
-    {
-      name: 'auth-storage', // کلید ذخیره‌سازی در لوکال استوریج
-    }
+    { name: 'auth-storage' } // کلید ذخیره‌سازی در لوکال استوریج
   )
 );
 ```

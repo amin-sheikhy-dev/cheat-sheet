@@ -127,7 +127,7 @@ error = جزئیات خطا
 
 ```jsx
 const { data, isPending, isError, error } = useQuery({
-  queryKey: ['events', { max: 3 }],
+  queryKey: ['events', { max: 3 }], // برای کشینگ استفاده میشه که ری اکت کوئری با این اسم کش رو ذخیره کنه
 
   // این تابعی که بهش میدیم باید یک پرامیس ریترن کنه که
   // این تابع ورودی هایی دارد که ما ان را دی استراکچر میکنیم
@@ -144,7 +144,42 @@ const { data, isPending, isError, error } = useQuery({
 });
 ```
 
-### مثال 2
+### مثال
+
+```tsx
+import { useQuery } from '@tanstack/react-query';
+import { fetchMeals } from '../lib/api';
+import { Link } from 'react-router-dom';
+
+export default function Menu() {
+  const { data, isPending, isError, error } = useQuery({
+    queryKey: ['meals'], // برای کشینگ استفاده میشه که ری اکت کوئری با این اسم کش رو ذخیره کنه
+    queryFn: fetchMeals,
+  });
+
+  if (isPending) {
+    return <p>Loading...</p>;
+  }
+
+  if (isError) {
+    return <p>{error.message}</p>;
+  }
+
+  // console.log(data);
+
+  return (
+    <>
+      {data.meals?.map((m) => (
+        <div key={m.idMeal}>
+          <Link to={`/menu/${m.idMeal}`}>{m.strMeal}</Link>
+        </div>
+      ))}
+    </>
+  );
+}
+```
+
+### مثال
 
 تابعی که در هوک قراره استفاده و در کامپوننت ایمپورت شه
 
