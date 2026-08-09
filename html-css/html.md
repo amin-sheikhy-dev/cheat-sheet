@@ -1,6 +1,6 @@
 ```html
-<!--* جهت سایت رو مشخص میکنه -->
 <html lang="en" dir="ltr">
+  <!--* جهت سایت رو مشخص میکنه -->
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="dalam bache ha" />
