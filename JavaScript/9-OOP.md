@@ -1,10 +1,9 @@
 ```js
-// توضیح داده شده Object Enhanced خط 960 درباره
-// استفاده کرد constructor fn ها نمیشه به عنوان arrow fn از
-
-// استفاده می‌کردند Constructor Fn ها برای ساخت ابجکت های مشابه از class در جاوااسکریپت قبل از معرفی
 const Person = function (firstName, birthYear) {
   this; // Person {}
+
+  // استفاده می‌کردند Constructor Fn ها برای ساخت ابجکت های مشابه از class در جاوااسکریپت قبل از معرفی
+  // استفاده کرد constructor fn ها نمیشه به عنوان arrow fn از
 
   this.firstName = firstName;
   this.birthYear = birthYear;
