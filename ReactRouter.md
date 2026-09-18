@@ -93,9 +93,9 @@ import { Link, Outlet } from 'react-router-dom';
 export default function About() {
   return (
     <div>
-      <h1 className="mb-7 text-5xl">'about Component'</h1>
+      <h1>'about Component'</h1>
 
-      <div className="mb-8 flex gap-9 border px-7 py-3">
+      <div>
         <Link to="/about/me">about me Component❤️</Link>
 
         <Link to="/about/you">about you Component🌙</Link>
@@ -133,7 +133,7 @@ export default function Menu() {
   // console.log(data);
 
   return (
-    <div className="dark:text-white">
+    <div>
       {data.meals?.map((m) => (
         <div key={m.idMeal}>
           <Link to={`/menu/${m.idMeal}`}>{m.strMeal}</Link>
@@ -167,7 +167,7 @@ export default function MenuItem() {
   // console.log(meal);
 
   return (
-    <div className="dark:text-white">
+    <div>
       <p>id={id}</p>
 
       <p>{meal?.meals?.[0].strMeal}</p>

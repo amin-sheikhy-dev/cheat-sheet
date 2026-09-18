@@ -106,7 +106,9 @@ export default function Page() {
 
 ---
 
-یه مثال عالی
+### یه مثال عالی
+
+کامپوننت کلاینت
 
 ```tsx
 'use client';
@@ -135,16 +137,14 @@ export default function FilterButtons() {
 }
 ```
 
+کامپوننت سرور
+
 ```tsx
 import { getRooms } from '@/lib/utils';
 import RoomItem from '@/components/rooms/room-item';
 import FilterButtons from '@/components/rooms/filter-buttons';
 
-interface RoomsPageProps {
-  searchParams: Promise<{ filter?: string }>;
-}
-
-export default async function RoomsPage({ searchParams }: RoomsPageProps) {
+export default async function RoomsPage({ searchParams }: { searchParams: Promise<{ filter?: string }> }) {
   const { filter } = await searchParams;
   const rooms = await getRooms();
 
@@ -172,18 +172,18 @@ export default async function RoomsPage({ searchParams }: RoomsPageProps) {
 
 ---
 
-مثال پیشرفته
+### مثال پیشرفته
 
-کامپوننت کلاینت
+### کامپوننت کلاینت
 
 ```tsx
 export default function Search() {
-  const router = useRouter();
-
   const [date, setDate] = useState<string[]>([]);
   const [query, setQuery] = useState<string>('');
   const [domains, setDomains] = useState<string[]>([]);
   const [searchInTitle, setSearchInTitle] = useState<boolean>(false);
+
+  const router = useRouter();
 
   function handleSearch(): void {
     if (!query && domains.length === 0) return;
@@ -206,9 +206,54 @@ export default function Search() {
     router.push(url);
   }
 
-  return <div>....</div>;
+  return (
+    <div>
+      <p>....</p>
+    </div>
+  );
 }
 ```
+
+### یه روش دیگم واسه اضافه کردن کوئری هست
+
+```tsx
+export default function Search() {
+  const [date, setDate] = useState<string[]>([]);
+  const [query, setQuery] = useState<string>('');
+  const [domains, setDomains] = useState<string[]>([]);
+  const [searchInTitle, setSearchInTitle] = useState<boolean>(false);
+
+  const router = useRouter();
+  const params = new URLSearchParams();
+
+  if (query.trim()) params.set('query', query);
+
+  if (domains.length > 0) params.set('domains', domains.join(','));
+
+  if (date.length === 2) {
+    params.set('fromDate', date[0]);
+    params.set('toDate', date[1]);
+  }
+
+  if (searchInTitle && query.trim()) params.set('searchInTitle', 'yes');
+
+  params.set('page', '1');
+
+  router.push(`/search?${params.toString()}`); // اینجا حتما باید تبدیل شه به استرینگ
+
+  return (
+    <div>
+      <p>....</p>
+    </div>
+  );
+}
+```
+
+خودش تولید می‌کند
+
+‍‍`/search?query=react&domains=github.com%2Cnpmjs.com&page=1`
+
+### کامپوننت سرور
 
 ```tsx
 import { searchNews } from '@/lib/api/news';
@@ -223,6 +268,10 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
 
   const currentPage: number = Number(params.page) || 1;
 
-  return <div>....</div>;
+  return (
+    <div>
+      <p>....</p>
+    </div>
+  );
 }
 ```

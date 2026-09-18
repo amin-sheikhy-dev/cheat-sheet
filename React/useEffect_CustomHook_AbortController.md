@@ -20,7 +20,7 @@ function useMovies(query, KEY) {
         setIsLoading(true);
         setError('');
 
-        // باعث میشه که به ری کوئست در حال ارسال بود و بعدش به ری کوئست دیگه رده شد ری کوئست قبلی کنسل بشه
+        // باعث میشه که به ری کوئست در حال ارسال بود و بعدش به ریکوئست دیگه رده شد ری کوئست قبلی کنسل بشه
         const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`, { signal: controller.signal });
 
         if (!res.ok) throw new Error('Something went wrong with fetching movies');
@@ -59,4 +59,14 @@ function useMovies(query, KEY) {
 // use CustomHook1
 // بعد حالا جایی که هوک ریترن میکنه و تو داخل متغیر مربوطه ذخیره میکنیم
 const { movies, isLoading, error } = useMovies(query, KEY);
+```
+
+روش جالبی که میشه باهاش استیتی که مقدارش وابسته به بقیه استیت ها هستش رو افکت انجام بدی
+
+```jsx
+useEffect(() => {
+  setDuration((number * sets * speed) / 60 + (sets - 1) * durationBreak);
+
+  playSound();
+}, [number, sets, speed, durationBreak, playSound]);
 ```
