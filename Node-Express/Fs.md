@@ -17,8 +17,8 @@ await fs.writeFile('test.txt', newData);
 ```
 
 ```ts
-// می‌خواهیم به انتهای فایل چیزی اضافه کنیم، بدون اینکه محتوای قبلی پاک شود
 await fs.appendFile('test.txt', 'New log\n');
+// می‌خواهیم به انتهای فایل چیزی اضافه کنیم، بدون اینکه محتوای قبلی پاک شود
 
 // مثال
 async function log(message: string) {
@@ -37,9 +37,9 @@ await fs.unlink('my-folder');
 ```
 
 ```ts
-// حذف فایل یا پوشه
 await fs.unlink('test.txt');
 await fs.rm('temp');
+// حذف فایل یا پوشه
 
 // uploads
 // ├── image.jpg
@@ -59,8 +59,9 @@ await fs.mkdir('data/users/images', { recursive: true }); // اینجوری ار
 ```
 
 ```ts
-// محتویات یک پوشه
 const files = await fs.readdir('data');
+// محتویات یک پوشه
+
 // data
 // ├── users.json
 // ├── products.json
@@ -83,8 +84,8 @@ for (const item of items) {
 ```
 
 ```ts
-// تغییر نام فایل یا پوشه - جابه‌جا کردن فایل یا پوشه
 await fs.rename('data/old-name.txt', 'data/new-name.txt');
+// تغییر نام فایل یا پوشه - جابه‌جا کردن فایل یا پوشه
 
 // تغییر مسیر
 await fs.rename('data/user.json', 'backup/user.json');
