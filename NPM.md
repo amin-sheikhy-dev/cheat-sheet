@@ -262,7 +262,7 @@ node --version
 
 توقف اجرای دستور
 
-```text
+```bash
 Ctrl + C
 ```
 
@@ -337,3 +337,8 @@ npm i ejs
 npm i -D @types/ejs
 
 npm i @nestjs/swagger
+
+npm i @nestjs/throttler
+
+npm i multer
+npm i -D @types/multer

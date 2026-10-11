@@ -3,19 +3,19 @@
 ```ts
 const user = this.userRepo.create({ name: 'Amin', email: 'amin@example.com' });
 
-await userRepository.save(user);
+await userRepo.save(user);
 ```
 
 گرفتن همه Userها
 
 ```ts
-const users = await userRepository.find();
+const users = await userRepo.find();
 ```
 
 گرفتن یک User
 
 ```ts
-const user = await userRepository.findOne({
+const user = await userRepo.findOne({
   where: { id: 1 },
 });
 ```
@@ -23,7 +23,7 @@ const user = await userRepository.findOne({
 چند شرط
 
 ```ts
-const user = await userRepository.findOne({
+const user = await userRepo.findOne({
   where: {
     name: 'Amin',
     email: 'amin@example.com',
@@ -36,7 +36,7 @@ const user = await userRepository.findOne({
 ### Update
 
 ```ts
-await userRepository.update(1, {
+await userRepo.update(1, {
   name: 'Amin Sheikhy',
 });
 ```
@@ -46,16 +46,16 @@ await userRepository.update(1, {
 ### Delete & remove()
 
 ```ts
-await userRepository.delete(1);
+await userRepo.delete(1);
 ```
 
 ```ts
-const user = await userRepository.findOne({
+const user = await userRepo.findOne({
   where: { id: 1 },
 });
 
 if (user) {
-  await userRepository.remove(user);
+  await userRepo.remove(user);
 }
 ```
 
@@ -156,7 +156,7 @@ export class Reservation {
 گرفتن یوزر با رزور هاش
 
 ```ts
-const user = await this.userRepository.findOne({
+const user = await this.userRepo.findOne({
   where: {
     email: 'ali@gmail.com',
   },
@@ -194,7 +194,7 @@ const user = await this.userRepository.findOne({
 گرفتن یوزر با اتاق هایی که رزور کرده البته به واسطه رزور ها اتاق رو نشون میده
 
 ```ts
-const user = await this.userRepository.findOne({
+const user = await this.userRepo.findOne({
   where: {
     email: 'ali@gmail.com',
   },
@@ -332,56 +332,49 @@ export class Profile {
 ### where-Like-In-Between
 
 ```ts
-const users = await userRepository.find({
-  where: {
-    isActive: true,
-    age: 27,
-  },
-});
-
 // برای جستجوی متنی
-const users = await userRepository.find({
+const users = await userRepo.find({
   where: {
     name: Like('%Amin%'),
   },
 });
 
 // مشخص را بگیریم ID اگر بخواهیم چند
-const users = await userRepository.find({
+const users = await userRepo.find({
   where: {
     id: In([1, 3, 7]),
   },
 });
 
 // هایی که سنشان بین 20 و 30 است User مثلاً
-const users = await userRepository.find({
+const users = await userRepo.find({
   where: {
     age: Between(20, 30),
   },
 });
 
 // بیشتر
-const users = await userRepository.find({
+const users = await userRepo.find({
   where: {
     age: MoreThan(25),
   },
 });
 
 // کمتر
-const users = await userRepository.find({
+const users = await userRepo.find({
   where: {
     age: LessThan(30),
   },
 });
 
 // جدید ترین یوزر ها
-const users = await userRepository.find({
+const users = await userRepo.find({
   order: {
     createdAt: 'DESC',
   },
 });
 
-const users = await userRepository.find({
+const users = await userRepo.find({
   skip: 10, // اون 10 تای اول رو رد کن
   take: 10, // فقط 10 تا بده
 });
@@ -389,13 +382,13 @@ const users = await userRepository.find({
 const page = 2;
 const limit = 10;
 
-const users = await userRepository.find({
+const users = await userRepo.find({
   skip: (page - 1) * limit,
   take: limit,
 });
 
 // اگر هم داده‌ها را بخواهیم و هم تعداد کل رکوردها
-const [users, total] = await userRepository.findAndCount({
+const [users, total] = await userRepo.findAndCount({
   skip: 0,
   take: 10,
 });
@@ -406,7 +399,7 @@ users = [
 total = 57;
 
 // یه کوئری واقعی
-const [users, total] = await userRepository.findAndCount({
+const [users, total] = await userRepo.findAndCount({
   where: {
     age: Between(20, 30),
     isActive: true,
@@ -428,7 +421,7 @@ const [users, total] = await userRepository.findAndCount({
 بهت اجازه می‌دهد Query را مرحله‌به‌مرحله بسازی.
 
 ```ts
-const users = await userRepository
+const users = await userRepo
   .createQueryBuilder('user') //
   .where('user.age > :age', { age: 20 })
   .orderBy('user.createdAt', 'DESC')
@@ -436,7 +429,7 @@ const users = await userRepository
 ```
 
 ```ts
-const user = await userRepository
+const user = await userRepo
   .createQueryBuilder('user')
   .where('user.email = :email', {
     email: 'amin@example.com',
@@ -447,7 +440,7 @@ const user = await userRepository
 AND
 
 ```ts
-const users = await userRepository
+const users = await userRepo
   .createQueryBuilder('user')
   .where('user.age > :age', {
     age: 20,
@@ -461,7 +454,7 @@ const users = await userRepository
 OR
 
 ```ts
-const users = await userRepository
+const users = await userRepo
   .createQueryBuilder('user')
   .where('user.name = :name1', {
     name1: 'Amin',
@@ -475,7 +468,7 @@ const users = await userRepository
 orderBy
 
 ```ts
-const users = await userRepository
+const users = await userRepo
   .createQueryBuilder('user') //
   .orderBy('user.createdAt', 'DESC')
   .getMany();
@@ -484,7 +477,7 @@ const users = await userRepository
 limit و offset
 
 ```ts
-const users = await userRepository
+const users = await userRepo
   .createQueryBuilder('user') //
   .orderBy('user.createdAt', 'DESC')
   .skip(10)
@@ -493,7 +486,7 @@ const users = await userRepository
 ```
 
 ```ts
-const users = await userRepository
+const users = await userRepo
   .createQueryBuilder('user') //
   .leftJoinAndSelect('user.posts', 'post')
   .getMany();
@@ -506,7 +499,7 @@ const users = await userRepository
 ```
 
 ```ts
-const query = userRepository.createQueryBuilder('user');
+const query = userRepo.createQueryBuilder('user');
 
 if (minAge) {
   query.andWhere('user.age >= :minAge', {

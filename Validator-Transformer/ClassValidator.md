@@ -155,7 +155,7 @@ export class UpdateUserDto {
 انتخاب میکنه کدوما باشن
 
 ```ts
-export class UserPreviewDto extends PickType(CreateUserDto, ['name', 'email'] as const) {}
+export class UserPreviewDto extends PickType(CreateUserDto, ['name', 'email']) {}
 
 // معادل
 
@@ -168,7 +168,7 @@ class UserPreviewDto {
 انتخاب میکنه کدوما نباشن
 
 ```ts
-export class PublicUserDto extends OmitType(CreateUserDto, ['password'] as const) {}
+export class PublicUserDto extends OmitType(CreateUserDto, ['password']) {}
 
 // معادل
 
