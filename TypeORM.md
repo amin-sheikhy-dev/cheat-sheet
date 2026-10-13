@@ -332,7 +332,7 @@ export class Profile {
 ### where-Like-In-Between
 
 ```ts
-// برای جستجوی متنی
+//o برای جستجوی متنی
 const users = await userRepo.find({
   where: {
     name: Like('%Amin%'),

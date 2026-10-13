@@ -342,3 +342,5 @@ npm i @nestjs/throttler
 
 npm i multer
 npm i -D @types/multer
+
+npm i @nestjs/serve-static
