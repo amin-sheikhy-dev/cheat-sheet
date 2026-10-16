@@ -344,3 +344,5 @@ npm i multer
 npm i -D @types/multer
 
 npm i @nestjs/serve-static
+
+npm i @imagekit/nodejs

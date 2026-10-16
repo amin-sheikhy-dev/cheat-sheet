@@ -93,3 +93,19 @@ export class VipGuard implements CanActivate {
   }
 }
 ```
+
+```ts
+import {
+  ClassSerializerInterceptor,
+  UseInterceptors,
+} from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+
+@UseInterceptors(
+  ClassSerializerInterceptor,
+)
+@Get(':id')
+findOne() {
+  return this.usersService.findOne();
+}
+```
