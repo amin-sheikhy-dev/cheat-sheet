@@ -360,3 +360,9 @@ styles/fonts/
 ```text
 /*.css
 ```
+
+git ls-files
+
+git ls-files src
+
+git ls-files | tree --fromfile

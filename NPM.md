@@ -1,3 +1,79 @@
+## تغییر Registry
+
+```bash
+npm config set registry https://mirror-npm.runflare.com
+```
+
+```bash
+npm config set registry https://mirror2.chabokan.net/npm/
+```
+
+```bash
+npm config set registry https://package-mirror.liara.ir/repository/npm/
+```
+
+بازگرداندن Registry پیش‌ فرض
+
+```bash
+npm config set registry https://registry.npmjs.org/
+```
+
+مشاهده Registry فعلی
+
+```bash
+npm config get registry
+```
+
+تست اتصال npm
+
+```bash
+npm ping
+```
+
+بررسی نصب بودن یک پکیج
+
+```bash
+npm list packageName
+```
+
+مشاهده نسخه npm
+
+```bash
+npm --version
+```
+
+مشاهده نسخه Node.js
+
+```bash
+node --version
+```
+
+توقف اجرای دستور
+
+```bash
+Ctrl + C
+```
+
+## کش کردن پکیج ها
+
+```bash
+npm install -g verdaccio
+```
+
+```bash
+npm set registry http://localhost:4873/
+```
+
+```bash
+npm config delete registry
+```
+
+زدن این دستور در ترمینال و بازکردن ادرس http://localhost:4873 مرورگر
+
+```bash
+verdaccio
+```
+
 ## ساخت پروژه با Vite
 
 ```bash
@@ -210,63 +286,24 @@ npm i date-fns-jalali
 npm i -g typescript
 ```
 
-## تغییر Registry
-
-```bash
-npm config set registry https://mirror-npm.runflare.com
-```
-
-```bash
-npm config set registry https://mirror2.chabokan.net/npm/
-```
-
-```bash
-npm config set registry https://package-mirror.liara.ir/repository/npm/
-```
-
-بازگرداندن Registry پیش‌ فرض
-
-```bash
-npm config set registry https://registry.npmjs.org/
-```
-
-مشاهده Registry فعلی
-
-```bash
-npm config get registry
-```
-
-تست اتصال npm
-
-```bash
-npm ping
-```
-
-بررسی نصب بودن یک پکیج
-
-```bash
-npm list packageName
-```
-
-مشاهده نسخه npm
-
-```bash
-npm --version
-```
-
-مشاهده نسخه Node.js
-
-```bash
-node --version
-```
-
-توقف اجرای دستور
-
-```bash
-Ctrl + C
-```
-
 ---
+
+sudo systemctl disable mongod نمی‌خوای دفعه بعد که سیستم روشن شد خودش بالا بیاد
+sudo systemctl enable mongod دفعه بعد که سیستم روشن شد خودش بالا بیاد
+sudo systemctl stop mongod خاموش
+sudo systemctl start mongod روشن
+
+sudo systemctl enable mysql
+sudo systemctl disable mysql
+sudo systemctl stop mysql
+sudo systemctl start mysql
+
+sudo systemctl enable postgresql
+sudo systemctl disable postgresql
+sudo systemctl stop postgresql
+sudo systemctl start postgresql
+
+systemctl is-active mongod mysql postgresql
 
 npm i express
 npm start
@@ -345,4 +382,129 @@ npm i -D @types/multer
 
 npm i @nestjs/serve-static
 
+npm i @nestjs/schedule
+
 npm i @imagekit/nodejs
+
+npm i @nestjs/mongoose mongoose
+
+استفاده از فستیفای
+npm i @nestjs/platform-fastify
+npm rm @nestjs/platform-express
+
+```ts
+import { NestFactory } from '@nestjs/core';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
+  await app.listen(3000, '0.0.0.0');
+}
+bootstrap();
+```
+
+npm i -D prisma
+npm i @prisma/client @prisma/adapter-pg pg
+npx prisma init
+
+npm i -D prisma@7
+npm i @prisma/client@7 @prisma/adapter-pg@7 pg
+npx prisma init --datasource-provider postgresql
+
+npm i @nestjs/drizzle drizzle-orm pg
+npm i -D drizzle-kit @types/pg
+
+---
+
+module,controller,service
+
+validation
+
+nestjs/config => module , class , main.ts
+
+Swagger
+
+Throttler
+
+TypeORM / TypeORM repo
+
+Middleware
+
+upload file
+npm i fastify-multer
+npm i @nest-lab/fastify-multer
+
+```ts
+import { NestFactory } from '@nestjs/core';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import fastifyMulter from 'fastify-multer';
+
+async function bootstrap() {
+  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
+
+  await app.register(fastifyMulter.contentParser);
+
+  await app.listen(3000, '0.0.0.0');
+}
+bootstrap();
+
+//
+
+import { FileInterceptor, File } from '@nest-lab/fastify-multer';
+
+@Post()
+@UseGuards(JwtGuard, RolesGuard)
+@Roles(Role.Admin, Role.Owner)
+@UseInterceptors(FileInterceptor('image'))
+createRoom(
+  @Body() roomData: CreateRoomDto,
+  @UploadedFile(imagePipe(true)) image: File,
+) {
+  return this.roomsService.createRoom(roomData, image);
+}
+```
+
+npm i @fastify/multipart
+
+```ts
+import multipart from '@fastify/multipart';
+
+await app.register(multipart, {
+  limits: { fileSize: 2 * 1024 * 1024 },
+});
+
+@Post()
+@UseGuards(JwtGuard, RolesGuard)
+@Roles(Role.Admin, Role.Owner)
+async createRoom(@Req() req: FastifyRequest) {
+  const file = await req.file();               // فایل
+  const buffer = await file.toBuffer();
+
+  // اعتبارسنجی دستی
+  if (!/^image\/(jpeg|png|webp)$/.test(file.mimetype)) {
+    throw new BadRequestException('Invalid file type');
+  }
+
+  // فیلدهای متنی: file.fields
+  return this.roomsService.createRoom(/* ... */, buffer);
+}
+```
+
+nest Exceptions
+
+imagekit - mail
+
+decorator - metadata
+
+jwt - passport
+
+Guards
+
+interceptor
+
+custom pipes
+
+code hash algoritm - jwt & passport algoritm
+
+schedule

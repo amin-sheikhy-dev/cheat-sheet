@@ -310,4 +310,36 @@ multiline.match(/^world/m); // الان درسته چون ابتدای هر خط
 // چیزی را بررسی میکنند ولی جزو متن مچ‌ شده حساب نمیشوند
 // Lookahead → بررسی میکند بعد از موقعیت فعلی چه چیزی وجود دارد
 // Lookbehind → بررسی میکند قبل از موقعیت فعلی چه چیزی وجود دارد
+
+// Lookahead (?=...) - بعد از موقعیت فعلی چه چیزی هست - خودش جزو نتیجه حساب نمیشه
+
+'ali@gmail.com'.match(/\w+(?=@)/); // ['ali'] - فقط اسم قبل از @ نه خود @
+
+'password123'.match(/\d+(?=\D|$)/); // ['123']
+
+// Negative Lookahead (?!...) - بعدش این نباشد
+'ali@gmail.com'.match(/\w+(?!@)/); // ['li'] - چون ali تا قبل از @ مچ شده و ادامه را رد میکند
+
+// پسوردی که حتما باید عدد داشته باشد
+/^(?=.*\d)\w{8,}$/.test('pass1234'); // true - lookahead اول چک میکند عدد باشد بعد بقیه
+/^(?=.*\d)\w{8,}$/.test('password'); // false
+
+// Lookbehind (?<=...) - قبل از موقعیت فعلی چه چیزی هست
+'$100'.match(/(?<=\$)\d+/); // ['100'] - فقط عدد بعد از $ بدون خود $
+
+// Negative Lookbehind (?<!...)
+'$100 200'.match(/(?<!\$)\d+/); // ['200'] - عددی که قبلش $ نیست
+
+// Named Capture Group - به جای ایندکس با اسم صدا بزن
+const date = '2026-05-31'.match(/(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/);
+
+date.groups.year; // '2026'
+date.groups.month; // '05'
+date.groups.day; // '31'
+
+'Ali Ahmadi'.replace(/(?<first>\w+) (?<last>\w+)/, '$<last> $<first>'); // Ahmadi Ali
+
+// matchAll - با فلگ g همه‌ی مچ ها را با گروه هاش میده - خروجی iteration پس convert به آرایه
+[...'a1 b22 c333'.matchAll(/(?<letter>\w)(?<digits>\d+)/g)];
+// هر آیتم: { 0: 'a1', groups: { letter: 'a', digits: '1' }, ... }
 ```
