@@ -1,27 +1,27 @@
 ## تغییر Registry
 
 ```bash
-npm config set registry https://mirror-npm.runflare.com
+npm set registry https://mirror-npm.runflare.com
 ```
 
 ```bash
-npm config set registry https://mirror2.chabokan.net/npm/
+npm set registry https://mirror2.chabokan.net/npm/
 ```
 
 ```bash
-npm config set registry https://package-mirror.liara.ir/repository/npm/
+npm set registry https://package-mirror.liara.ir/repository/npm/
 ```
 
 بازگرداندن Registry پیش‌ فرض
 
 ```bash
-npm config set registry https://registry.npmjs.org/
+npm set registry https://registry.npmjs.org/
 ```
 
 مشاهده Registry فعلی
 
 ```bash
-npm config get registry
+npm get registry
 ```
 
 تست اتصال npm
@@ -363,6 +363,9 @@ npm i cookie-session @types/cookie-session
 npm i @nestjs/jwt @nestjs/passport passport passport-jwt bcrypt
 npm i -D @types/passport-jwt @types/bcrypt
 
+npm i cookie-parser
+npm i -D @types/cookie-parser
+
 ---
 
 npm i @nestjs/config
@@ -388,21 +391,7 @@ npm i @imagekit/nodejs
 
 npm i @nestjs/mongoose mongoose
 
-استفاده از فستیفای
 npm i @nestjs/platform-fastify
-npm rm @nestjs/platform-express
-
-```ts
-import { NestFactory } from '@nestjs/core';
-import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
-import { AppModule } from './app.module';
-
-async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
-  await app.listen(3000, '0.0.0.0');
-}
-bootstrap();
-```
 
 npm i -D prisma
 npm i @prisma/client @prisma/adapter-pg pg
@@ -415,96 +404,5 @@ npx prisma init --datasource-provider postgresql
 npm i @nestjs/drizzle drizzle-orm pg
 npm i -D drizzle-kit @types/pg
 
----
-
-module,controller,service
-
-validation
-
-nestjs/config => module , class , main.ts
-
-Swagger
-
-Throttler
-
-TypeORM / TypeORM repo
-
-Middleware
-
-upload file
 npm i fastify-multer
 npm i @nest-lab/fastify-multer
-
-```ts
-import { NestFactory } from '@nestjs/core';
-import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
-import fastifyMulter from 'fastify-multer';
-
-async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
-
-  await app.register(fastifyMulter.contentParser);
-
-  await app.listen(3000, '0.0.0.0');
-}
-bootstrap();
-
-//
-
-import { FileInterceptor, File } from '@nest-lab/fastify-multer';
-
-@Post()
-@UseGuards(JwtGuard, RolesGuard)
-@Roles(Role.Admin, Role.Owner)
-@UseInterceptors(FileInterceptor('image'))
-createRoom(
-  @Body() roomData: CreateRoomDto,
-  @UploadedFile(imagePipe(true)) image: File,
-) {
-  return this.roomsService.createRoom(roomData, image);
-}
-```
-
-npm i @fastify/multipart
-
-```ts
-import multipart from '@fastify/multipart';
-
-await app.register(multipart, {
-  limits: { fileSize: 2 * 1024 * 1024 },
-});
-
-@Post()
-@UseGuards(JwtGuard, RolesGuard)
-@Roles(Role.Admin, Role.Owner)
-async createRoom(@Req() req: FastifyRequest) {
-  const file = await req.file();               // فایل
-  const buffer = await file.toBuffer();
-
-  // اعتبارسنجی دستی
-  if (!/^image\/(jpeg|png|webp)$/.test(file.mimetype)) {
-    throw new BadRequestException('Invalid file type');
-  }
-
-  // فیلدهای متنی: file.fields
-  return this.roomsService.createRoom(/* ... */, buffer);
-}
-```
-
-nest Exceptions
-
-imagekit - mail
-
-decorator - metadata
-
-jwt - passport
-
-Guards
-
-interceptor
-
-custom pipes
-
-code hash algoritm - jwt & passport algoritm
-
-schedule

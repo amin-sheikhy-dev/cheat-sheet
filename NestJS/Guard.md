@@ -1,23 +1,4 @@
 ```ts
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-
-export const ClientIp = createParamDecorator((data: unknown, context: ExecutionContext) => {
-  const request = context.switchToHttp().getRequest();
-
-  return request.ip;
-});
-
-//
-
-@Get()
-getSomething(@ClientIp() ip: string) {
-  console.log(ip);
-
-  return { ip };
-}
-```
-
-```ts
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -43,6 +24,8 @@ export class UsersController {
 }
 ```
 
+---
+
 ```ts
 import { SetMetadata } from '@nestjs/common';
 
@@ -54,25 +37,7 @@ export const VipOnly = () => {
 
 //
 
-@Controller('products')
-@UseGuards(VipGuard)
-export class ProductsController {
-  @Get()
-  getProducts() {
-    return 'All products';
-  }
-
-  @Get('vip')
-  @VipOnly()
-  getVipProducts() {
-    return 'VIP products';
-  }
-}
-
-//
-
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-
 import { Reflector } from '@nestjs/core';
 import { VIP_KEY } from './vip.decorator.js';
 
@@ -92,20 +57,21 @@ export class VipGuard implements CanActivate {
     return request.user?.isVip === true;
   }
 }
-```
 
-```ts
-import {
-  ClassSerializerInterceptor,
-  UseInterceptors,
-} from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
+//
 
-@UseInterceptors(
-  ClassSerializerInterceptor,
-)
-@Get(':id')
-findOne() {
-  return this.usersService.findOne();
+@Controller('products')
+@UseGuards(VipGuard)
+export class ProductsController {
+  @Get()
+  getProducts() {
+    return 'All products';
+  }
+
+  @Get('vip')
+  @VipOnly()
+  getVipProducts() {
+    return 'VIP products';
+  }
 }
 ```

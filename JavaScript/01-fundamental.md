@@ -1,11 +1,11 @@
 ```js
-'use strict'; // این باعث میشه تا خطاها و باگ هایی که توی برناممون داشتیم رو بیاد بهمون بگه و بهتره که اول هر پروژه ای بزاریمش
+"use strict"; // این باعث میشه تا خطاها و باگ هایی که توی برناممون داشتیم رو بیاد بهمون بگه و بهتره که اول هر پروژه ای بزاریمش
 
 // استفاده میکنیم const و let برای تعریف متغیر از
 // هیچوقت تغییر نمیکند const تعریف کردیم رو دوباره مقدار دهی کنیم ولی مقدار متغیر های let اگر بخاهیم میتوانیم متغیری که با
-let myName = 'amin';
+let myName = "amin";
 
-const myBirthYear = '1384';
+const myBirthYear = "1384";
 
 // تبدیل رشته به عدد
 Number(myBirthYear); // 1384
@@ -30,13 +30,13 @@ x--; // x = x - 1
 // سه خط مساوی یعنی اینکه دو طرف تساوی رو با هم مقایسه میکنه که یکی هستن یا خیر
 // سه مساوی نوع و مقدار رو مقایسه میکنه و مقدار رو تغییر نمیده
 
-5 === '5'; // false  چون نوع‌ها متفاوت‌اند (عدد و رشته)
-'19' === 19; // false
+5 === "5"; // false  چون نوع‌ها متفاوت‌اند (عدد و رشته)
+"19" === 19; // false
 true === 1; // false  چون نوع فرق داره (boolean و number)
 null === undefined; // false   چون نوع‌ها فرق دارن
 
 // دو مساوی نوع رو مقایسه میکنه و تبدیل نوع انجام میده
-5 == '5'; // true   چون '5' به عدد تبدیل می‌شود
+5 == "5"; // true   چون '5' به عدد تبدیل می‌شود
 true == 1; // true   چون true به 1 تبدیل میشه
 null == undefined; // true    چون جاوااسکریپت این دو رو "برابر" در نظر می‌گیره
 
@@ -46,57 +46,57 @@ null == undefined; // true    چون جاوااسکریپت این دو رو "ب
 // استفاده از ==! در مواقع که بخای بگی مخالف باشه
 12 !== 9; // true
 9 !== 9; // false
-!''; // true
-!'amin'; // false
+!""; // true
+!"amin"; // false
 
 const value1 = true;
 const value2 = true;
 
-if (value1 && value2) ''; // زمانی ک هر دو شرط درست باشن اجرا میشه
-if (value1 || value2) ''; // زمانی ک حداقل یکی از دو شرط درست باشن اجرا میشه
+if (value1 && value2) ""; // زمانی ک هر دو شرط درست باشن اجرا میشه
+if (value1 || value2) ""; // زمانی ک حداقل یکی از دو شرط درست باشن اجرا میشه
 
 // switch case
-const rooz = '3shanbe';
+const rooz = "3shanbe";
 
 switch (rooz) {
-  case 'shanbe':
-  case '2shanbe':
-    'kelas nadari';
+  case "shanbe":
+  case "2shanbe":
+    "kelas nadari";
     break;
 
-  case '1shanbe':
-    'madar manteghi 7:30 | ons qoran 10:30 | barname sazi 14:45';
+  case "1shanbe":
+    "madar manteghi 7:30 | ons qoran 10:30 | barname sazi 14:45";
     break;
 
-  case '3shanbe':
-    'mabani 7:30 | riazi 14:45';
+  case "3shanbe":
+    "mabani 7:30 | riazi 14:45";
     break;
 
-  case '4shanbe':
-    'fizik2 16:30';
+  case "4shanbe":
+    "fizik2 16:30";
     break;
 
-  case '5shanbe':
-    'zaban 11:30';
+  case "5shanbe":
+    "zaban 11:30";
     break;
 
-  case 'jome':
-    'Gosaste 7:30';
+  case "jome":
+    "Gosaste 7:30";
     break;
 
   default:
-    'rooz namoshakhas!!!';
+    "rooz namoshakhas!!!";
 }
 
 const myAge = 20;
 // مقدار دادن به یک متغیر بر اساس شرایط
 // اگه شرط داخل درست باشه اولی رو میده - اگه هم شرط برقرار نشه دومی میده
-const drink = myAge >= 18 ? 'i like wine 🍷' : 'i like water 💧';
+const drink = myAge >= 18 ? "i like wine 🍷" : "i like water 💧";
 
 // function & return
 // اسم تابع ما لاگر هستش
 function logger() {
-  'My Name Is Amin :D';
+  "My Name Is Amin :D";
 }
 
 // برای استفاده از تابع باید اسم آن را همراه پرانتز های جلوش بزاریم
@@ -108,9 +108,9 @@ function information(name, city) {
   return `my name is ${name} and I live in ${city}`;
 }
 
-information('sara', 'tehran'); // my name is sara and I live in tehran
+information("sara", "tehran"); // my name is sara and I live in tehran
 
-information('amin', 'qom'); // my name is amin and I live in qom
+information("amin", "qom"); // my name is amin and I live in qom
 
 // function Expression
 const adder = function (a, b) {
@@ -139,7 +139,7 @@ const adder5 = (a, b) => {
 
 // Array fundamental
 // ارایه ها برای جمع اوری اطلاعات و ذخیره آن ها در یک جای مشخص استفاده میشه
-const friends = ['ahmad', 'mmd', 'keyvan', 'hasan'];
+const friends = ["ahmad", "mmd", "keyvan", "hasan"];
 
 // برای استفاده از ارایه ها باید جلوی ارایه آکولاد باز کنیم و ایندکس اون مقداری که در ارایه داریم رو بزاریم
 // دقت شود که شمارش ارایه ها از 0 شروع میشود یعنی اگر بخاییم به اولین مقدار ارایه دسترسی داشته باشیم باید عدد 0 رو به آن ارایه بدهیم
@@ -150,50 +150,50 @@ friends[3]; // 'hasan'
 friends.length; // 4
 
 // عوض کردن یکی از مقادیر ارایه
-friends[1] = 'reza';
-friends[2] = 'mohsen';
+friends[1] = "reza";
+friends[2] = "mohsen";
 
 // ارایه ها میتونن هر مقداری رو در خودشون ذخیره کنن برای مثال در ارایه زیر انواعی از مقدار های مختلف یعنی استرینگ - متغیر و عدد در ارایه زیر دیده میشود
-const firstName = 'amin';
+const firstName = "amin";
 
-const amin2 = [firstName, 'sheikhy', 1404 - 1384, 'programmer', friends]; // حتی میشود در یک ارایه ارایه دیگری را ذخیره کرد
+const amin2 = [firstName, "sheikhy", 1405 - 1384, "developer", friends]; // حتی میشود در یک ارایه ارایه دیگری را ذخیره کرد
 
 // Objects fundamental
 // در ابجکت ها هم مثل ارایه ها هر چیزی میتونی قرار بدی مثل تابع یا بولین ها
 
 const aminObjects = {
-  firstName: 'amin', // فرست نیم کلید هست و امین ولیو هست و به کل این خط میگن متد
+  firstName: "amin", // فرست نیم کلید هست و امین ولیو هست و به کل این خط میگن متد
 
-  lastName: 'sheikhy',
+  lastName: "sheikhy",
 
-  age: 1404 - 1384,
+  age: 1405 - 1384,
 
-  job: 'programmer',
+  job: "developer",
 
-  friends: ['matin', 'fatemeh', 'mohammad'],
+  friends: ["matin", "fatemeh", "mohammad"],
 
   driverLicense: true,
 
   calcAge: function (birthYear) {
-    return 1404 - birthYear;
+    return 1405 - birthYear;
   },
 };
 // برای دسترسی به پراپرتی های موجود اول اسم ابجکت و بعد نقطه بعد کلیدش
-aminObjects.job; // 'programmer'
+aminObjects.job; // 'developer'
 
 // میشه از براکتم استفاده کرد اینجوری که باید رشته ای از پراپرتی که میخای داخل براکت بزاری
-aminObjects['programmer'];
+aminObjects["developer"];
 
 // قرار دادن اکسپرشن داخل براکت
-const nameKey = 'Name';
-aminObjects['first' + nameKey];
+const nameKey = "Name";
+aminObjects["first" + nameKey];
 aminObjects[`last${nameKey}`];
 
 // اضافه کردن پراپرتی به یه ابجکت
-aminObjects.city = 'Qom';
+aminObjects.city = "Qom";
 
 // اضافه کردن پراپرتی به یه ابجکت با استفاده از براکت
-aminObjects['location'] = 'iran';
+aminObjects["location"] = "iran";
 
 // Loop fundamental
 // حلقه ها تا زمانی که شرط ما ترو باشد اجرا میشود
@@ -203,15 +203,15 @@ for (let i = 1; i < 4; i++) {
 }
 
 // Continue
-const UX = [1, 'a', true];
+const UX = [1, "a", true];
 // حتی اگه شرط داخل پرانتز برقرار بود از اون یدونه چشم پوشی کن و بقیه رو ادامه بده
 for (let i = 0; i < UX.length; i++) {
-  if (typeof UX[i] !== 'number') continue; // اگه به عضوی رسیدی که نوعش نامبر نبود از اون چشم پوشی کن و حلقه رو ادامه بده
+  if (typeof UX[i] !== "number") continue; // اگه به عضوی رسیدی که نوعش نامبر نبود از اون چشم پوشی کن و حلقه رو ادامه بده
 }
 
 // Break
 for (let i = 0; i < UX.length; i++) {
-  if (typeof UX[i] === 'number') break; // به اولین عدد رسید حلقه رو متوقف کنه
+  if (typeof UX[i] === "number") break; // به اولین عدد رسید حلقه رو متوقف کنه
 }
 
 // while loop
