@@ -3,3 +3,19 @@ module,controller,service
 export import
 
 app module
+
+استفاده از فستیفای
+npm i @nestjs/platform-fastify
+npm rm @nestjs/platform-express
+
+```ts
+import { NestFactory } from '@nestjs/core';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
+  await app.listen(3000, '0.0.0.0');
+}
+bootstrap();
+```
