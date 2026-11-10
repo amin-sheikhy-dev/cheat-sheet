@@ -1,23 +1,27 @@
-ایجاد User
+ایجاد
 
 ```ts
-const user = this.userRepo.create({ name: 'Amin', email: 'amin@example.com' });
+const user = userRepo.create({ name: 'Amin', email: 'amin@example.com' });
 
 await userRepo.save(user);
 ```
 
-گرفتن همه Userها
+گرفتن همه
 
 ```ts
 const users = await userRepo.find();
 ```
 
-گرفتن یک User
+گرفتن یک
 
 ```ts
 const user = await userRepo.findOne({
   where: { id: 1 },
 });
+```
+
+```ts
+const otp = await otpRepo.findOneBy({ email });
 ```
 
 چند شرط
@@ -33,20 +37,55 @@ const user = await userRepo.findOne({
 
 ---
 
-### Update
+اپدیت
+
+بر اساس ابجکت اول پیدا میکنه و مقادیر دوم رو جایگزین میکنه
 
 ```ts
-await userRepo.update(1, {
-  name: 'Amin Sheikhy',
-});
+await userRepo.update(1, { name: 'Amin Sheikhy' });
+
+return sessionRepo.update({ userId: userId, revokedAt: IsNull() }, { revokedAt: new Date() });
+```
+
+بر اساس این ایمیل تصمیم میگیره اگه از قبل وجود داشت اپیدیتش کنه اگه نبود ایجاد کنه
+
+```ts
+await otpRepo.upsert(
+  {
+    email: email,
+    passwordHash: await bcrypt.hash(password, 10),
+    codeHash: await bcrypt.hash(code, 10),
+    expiresAt: new Date(Date.now() + Number(config.getOrThrow('OTP_TTL_MINUTES')) * 60 * 1000),
+    attempts: 0,
+  },
+  ['email']
+);
+
+await resetRepo.upsert(
+  {
+    email,
+    tokenHash: hashToken(resetToken),
+    expiresAt: new Date(Date.now() + Number(config.getOrThrow('PASSWORD_RESET_TTL_MINUTES')) * 60 * 1000),
+  },
+  ['email']
+);
+```
+
+کاهش افزایش
+
+```ts
+await otpRepo.increment({ email }, 'attempts', 1);
+await userRepo.increment({ id: userId }, 'points', 10);
+
+await productRepo.decrement({ id: productId }, 'stock', quantity);
 ```
 
 ---
 
-### Delete & remove()
+حذف
 
 ```ts
-await userRepo.delete(1);
+await otpRepo.delete({ email });
 ```
 
 ```ts
@@ -57,6 +96,12 @@ const user = await userRepo.findOne({
 if (user) {
   await userRepo.remove(user);
 }
+```
+
+وجود داشتن یا نداشتن رو چک میکنه و فقط بولین ریترن میکنه
+
+```ts
+await roomRepo.existsBy({ roomNumber: id });
 ```
 
 ---
@@ -156,7 +201,7 @@ export class Reservation {
 گرفتن یوزر با رزور هاش
 
 ```ts
-const user = await this.userRepo.findOne({
+const user = await userRepo.findOne({
   where: {
     email: 'ali@gmail.com',
   },
@@ -194,14 +239,12 @@ const user = await this.userRepo.findOne({
 گرفتن یوزر با اتاق هایی که رزور کرده البته به واسطه رزور ها اتاق رو نشون میده
 
 ```ts
-const user = await this.userRepo.findOne({
+const user = await userRepo.findOne({
   where: {
     email: 'ali@gmail.com',
   },
   relations: {
-    reservations: {
-      room: true,
-    },
+    reservations: { room: true },
   },
 });
 ```
@@ -233,7 +276,7 @@ const user = await this.userRepo.findOne({
 گرفتن اتاق ها و روز های رزور شده
 
 ```ts
-const room = await this.roomRepository.findOne({
+const room = await roomRepository.findOne({
   where: {
     id: roomId,
   },
@@ -263,7 +306,7 @@ const room = await this.roomRepository.findOne({
 گرفتن رزور ها با یوزر ها و اتاق ها
 
 ```ts
-const reservation = await this.reservationRepository.findOne({
+const reservation = await reservationRepository.findOne({
   where: {
     id: reservationId,
   },
@@ -333,48 +376,55 @@ export class Profile {
 
 ```ts
 //o برای جستجوی متنی
-const users = await userRepo.find({
+userRepo.find({
   where: {
     name: Like('%Amin%'),
   },
 });
 
+userRepo.find({
+  where: {
+    email: ILike(`%${email}%`),
+    role: In(visibleRoles),
+  },
+});
+
 // مشخص را بگیریم ID اگر بخواهیم چند
-const users = await userRepo.find({
+userRepo.find({
   where: {
     id: In([1, 3, 7]),
   },
 });
 
 // هایی که سنشان بین 20 و 30 است User مثلاً
-const users = await userRepo.find({
+userRepo.find({
   where: {
     age: Between(20, 30),
   },
 });
 
 // بیشتر
-const users = await userRepo.find({
+userRepo.find({
   where: {
     age: MoreThan(25),
   },
 });
 
 // کمتر
-const users = await userRepo.find({
+userRepo.find({
   where: {
     age: LessThan(30),
   },
 });
 
 // جدید ترین یوزر ها
-const users = await userRepo.find({
+userRepo.find({
   order: {
     createdAt: 'DESC',
   },
 });
 
-const users = await userRepo.find({
+userRepo.find({
   skip: 10, // اون 10 تای اول رو رد کن
   take: 10, // فقط 10 تا بده
 });
@@ -382,7 +432,7 @@ const users = await userRepo.find({
 const page = 2;
 const limit = 10;
 
-const users = await userRepo.find({
+userRepo.find({
   skip: (page - 1) * limit,
   take: limit,
 });

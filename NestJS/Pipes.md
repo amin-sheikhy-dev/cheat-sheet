@@ -1,39 +1,161 @@
-custom pipes
-
-nest pipes
+در نست Pipe فقط برای Param نیست
 
 ```ts
-import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
-import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+@Param('id', PositiveIntPipe)
 
+@Query('page', PositiveIntPipe)
+
+@Body('age', PositiveIntPipe)
+```
+
+# nest pipes
+
+#### `ParseIntPipe => تبدیل به عدد صحیح`
+
+```ts
+@Get(':id')
+findOne(@Param('id', ParseIntPipe) id: number) {
+  return this.usersService.findOne(id);
+}
+
+new ParseIntPipe({
+  optional: true, // اختیاری میشه
+  errorHttpStatusCode: HttpStatus.BAD_REQUEST, // کد خطا
+})
+```
+
+#### `ParseFloatPipe => تبدیل به عدد اعشاری`
+
+```ts
+// GET /products?price=19.5
+
+@Get()
+findProducts(@Query('price', ParseFloatPipe) price: number) {
+  return this.productsService.findByPrice(price);
+}
+```
+
+#### `ParseBoolPipe => Boolean تبدیل به`
+
+```ts
+// GET /users?active=true
+
+@Get()
+findUsers(@Query('active', ParseBoolPipe) active: boolean) {
+  return this.usersService.findByStatus(active);
+}
+
+// اختیاری میشه
+new ParseBoolPipe({ optional: true })
+
+```
+
+#### `ParseArrayPipe => تبدیل و اعتبارسنجی آرایه`
+
+```ts
+// GET /users?ids=1,2,3
+
+@Get()
+findMany(@Query('ids', new ParseArrayPipe({ items: Number, separator: ',' })) ids: number[]) {
+  return this.usersService.findMany(ids); // [1, 2, 3]
+}
+
+new ParseArrayPipe({
+  items: Number,  // نوع آیتم‌ ها
+  separator: ',', // جدا کننده — پیش‌ فرضش همینی هست که الانه
+  optional: true,
+})
+```
+
+#### `ParseUUIDPipe => UUID اعتبارسنجی`
+
+```ts
+// GET /users/6ae6df7a-672c-83ed-a069-3fbac8313c9d
+
+@Get(':id')
+findOne(@Param('id', ParseUUIDPipe) id: string) {
+  return this.usersService.findOne(id);
+}
+
+new ParseUUIDPipe({
+  optional: true,
+  version: '4',   // نسخه UUID — '3' | '4' | '5'
+})
+```
+
+#### `ParseEnumPipe => Enum اعتبارسنجی مقادیر`
+
+```ts
+export enum ReservationStatus {
+  PENDING = 'pending',
+  CONFIRMED = 'confirmed',
+  CANCELLED = 'cancelled',
+}
+
+@Get()
+findReservations(@Query('status', new ParseEnumPipe(ReservationStatus)) status: ReservationStatus) {
+  return this.reservationsService.findByStatus(status);
+}
+
+new ParseEnumPipe(ReservationStatus, {
+  optional: true,
+  errorHttpStatusCode: HttpStatus.BAD_REQUEST,
+})
+```
+
+#### `DefaultValuePipe => تعیین مقدار پیش‌فرض`
+
+```ts
+// GET /users
+
+// GET /users?limit=20
+
+@Get()
+findAll(@Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number) {
+  return this.usersService.findAll(limit);
+}
+```
+
+#### `ParseFilePipe => اعتبارسنجی فایل آپلودشده`
+
+```ts
+@Post('upload')
+@UseInterceptors(FileInterceptor('file'))
+uploadFile(
+  @UploadedFile(
+    new ParseFilePipe({
+      validators: [new MaxFileSizeValidator({ maxSize: 2 * 1024 * 1024 }), new FileTypeValidator({ fileType: 'image/jpeg' })],
+    }),
+  )
+  file: Express.Multer.File,
+) {
+  return file;
+}
+```
+
+# custom pipes
+
+مثال
+
+```ts
 export class CreateUserDto {
-  @ApiProperty({ description: 'User email address', example: 'user@example.com' })
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim().toLowerCase() : value))
   @IsEmail()
   email: string;
-
-  @ApiProperty({ description: 'User password', example: '12345678', minLength: 8, maxLength: 72 })
   @IsString()
-  @MinLength(8)
-  @MaxLength(72)
-  @IsNotEmpty()
   password: string;
 }
 
 //
-
-import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
-import { PickType } from '@nestjs/swagger';
-import { plainToInstance } from 'class-transformer';
-import { validate } from 'class-validator';
-import { CreateUserDto } from '../../users/dto/create-user.dto.js';
-
 class EmailDto extends PickType(CreateUserDto, ['email']) {}
 
 @Injectable()
 export class ParseEmailPipe implements PipeTransform {
   async transform(value: unknown) {
+    // این خط پایین در صورتی بزار که ارسال ایمیل اختیاری باشه
+    if (value === undefined || value === '') {
+      return undefined;
+    }
+
     const obj = plainToInstance(EmailDto, { email: value });
     const errors = await validate(obj);
 
@@ -46,10 +168,9 @@ export class ParseEmailPipe implements PipeTransform {
 }
 ```
 
-```ts
-import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
-import { Role } from '../../users/entities/user.entity.js';
+مثال
 
+```ts
 @Injectable()
 export class ParseRolePipe implements PipeTransform {
   private readonly allowedRoles = [Role.Admin, Role.User];
@@ -65,5 +186,67 @@ export class ParseRolePipe implements PipeTransform {
 
     return value as Role.Admin | Role.User;
   }
+}
+```
+
+مثال
+
+```ts
+@Injectable()
+export class ParseNumberPipe implements PipeTransform {
+  transform(value: string): number {
+    const parsedValue = Number(value);
+
+    if (Number.isNaN(parsedValue)) {
+      throw new BadRequestException('Value must be a number');
+    }
+
+    return parsedValue;
+  }
+}
+```
+
+مثال
+
+```ts
+@Injectable()
+export class PositiveIntPipe implements PipeTransform {
+  transform(value: string): number {
+    const parsedValue = Number(value);
+
+    if (!Number.isInteger(parsedValue) || parsedValue <= 0) {
+      throw new BadRequestException('ID must be a positive integer');
+    }
+
+    return parsedValue;
+  }
+}
+```
+
+مثال
+
+```ts
+@Injectable()
+export class RangePipe implements PipeTransform {
+  constructor(
+    private readonly min: number,
+    private readonly max: number
+  ) {}
+
+  transform(value: string): number {
+    const parsedValue = Number(value);
+
+    if (!Number.isInteger(parsedValue) || parsedValue < this.min || parsedValue > this.max) {
+      throw new BadRequestException(`Value must be between ${this.min} and ${this.max}`);
+    }
+
+    return parsedValue;
+  }
+}
+
+// استفاده
+@Get(':id')
+findOne(@Param('id', new RangePipe(1, 100)) id: number) {
+  return this.usersService.findOne(id);
 }
 ```

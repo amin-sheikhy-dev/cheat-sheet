@@ -309,6 +309,34 @@ README.md
 
 ---
 
+نمایش فایل های پروژه
+
+```bash
+git ls-files
+```
+
+```bash
+git ls-files src
+```
+
+```bash
+git ls-files | tree --fromfile
+```
+
+---
+
+برگردوندن تغییرات و فایل های ایجاد شده به کامیت
+
+```bash
+
+git reset --hard HEAD
+```
+
+```bash
+
+git clean -fd
+```
+
 # .gitignore
 
 برای نادیده گرفتن فایل‌ها و پوشه‌ها:
@@ -360,9 +388,3 @@ styles/fonts/
 ```text
 /*.css
 ```
-
-git ls-files
-
-git ls-files src
-
-git ls-files | tree --fromfile

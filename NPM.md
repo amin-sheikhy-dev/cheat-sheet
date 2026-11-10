@@ -57,7 +57,7 @@ Ctrl + C
 ## کش کردن پکیج ها
 
 ```bash
-npm install -g verdaccio
+npm i -g verdaccio
 ```
 
 ```bash
@@ -78,10 +78,6 @@ verdaccio
 
 ```bash
 npm create vite@latest
-```
-
-```bash
-npm i
 ```
 
 ```bash
@@ -303,7 +299,7 @@ sudo systemctl disable postgresql
 sudo systemctl stop postgresql
 sudo systemctl start postgresql
 
-systemctl is-active mongod mysql postgresql
+systemctl is-active mongod mysql postgresql تست همشون که ببینی فعالن یا نه
 
 npm i express
 npm start
@@ -335,18 +331,6 @@ npm i jsonwebtoken
 npm i nanoid
 
 ---
-
-npm i -g @nestjs/cli
-nest --version
-
-nest new my-nest-app
-
-npm run start:dev
-
-nest g mo messages ساخت ماژول
-nest g co messages ساخت کنترلر
-nest g s messages ساخت سرویس
-nest g res messages یه کراد کامل
 
 npm i class-validator class-transformer
 
@@ -406,3 +390,51 @@ npm i -D drizzle-kit @types/pg
 
 npm i fastify-multer
 npm i @nest-lab/fastify-multer
+
+---
+
+npm i tailwindcss @tailwindcss/vite
+
+```ts
+// vite.config.ts
+import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+});
+```
+
+```css
+/* index.css */
+@import 'tailwindcss';
+
+/* import => main.tsx */
+```
+
+npm i -D tailwindcss @tailwindcss/postcss postcss
+
+```
+postcss.config.mjs
+```
+
+اگه نکست از دیفالتش نصب کنی به این نیازی نیست
+
+```ts
+// postcss.config.mjs
+const config = {
+  plugins: {
+    '@tailwindcss/postcss': {},
+  },
+};
+
+export default config;
+```
+
+```css
+/* global.css */
+@import 'tailwindcss';
+
+/* import => layout.tsx */
+```
