@@ -3,7 +3,7 @@
 اینجا مشخص میکنی توکن رو از کجا بخونه مثلا کوکی یا هدر یا بقیه جاها
 
 ```ts
-// امضا شده است access token داخل decode چیزی که بعد از
+//o امضا شده است access token داخل decode چیزی که بعد از
 interface JwtAccessPayload {
   sub: string;
   email: string;
