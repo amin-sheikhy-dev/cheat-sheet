@@ -8,7 +8,7 @@ const items = [
   { name: 'Link 4', icon: '🔘', href: '/link4' },
 ];
 
-export default function Header() {
+export default function Navigation() {
   return (
     <>
       <header className="sticky top-0 z-10 border-b border-white/15 bg-white/0 text-white backdrop-blur-sm">
