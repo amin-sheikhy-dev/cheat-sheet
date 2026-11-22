@@ -3,13 +3,13 @@
 ## نصب و ساخت پروژه
 
 ```bash
-npm i -g @nestjs/cli        # نصب CLI
+npm i -g @nestjs/cli        # CLI نصب
 nest --version              # نمایش ورژن نست - یا مطمئن شدن از نصب
 nest new <name>             # پروژه جدید
 nest info                   # اطلاعات پروژه و نسخه‌ها
-nest upgrade                # آپگرید به آخرین نسخه NestJS
+nest upgrade                # آپگرید به آخرین نسخه نست
 nest add <library>          # اضافه کردن کتابخونه خارجی
-nest deploy                 # deploy به cloud
+nest deploy                 # cloud به deploy
 ```
 
 ## Generate — `nest g <schematic> <name>`
@@ -19,7 +19,7 @@ nest deploy                 # deploy به cloud
 nest g module        mo   # ماژول
 nest g controller    co   # کنترلر
 nest g service       s    # سرویس
-nest g resource      res  # CRUD کامل — module + controller + service + dto
+nest g resource      res  # full CRUD — module + controller + service + dto
 
 # ─── auth & logic ────────────────────────
 nest g guard         gu   # گارد
@@ -35,9 +35,9 @@ nest g interface     itf  # اینترفیس
 nest g provider      pr   # پروایدر
 nest g resolver      r    # GraphQL resolver
 nest g gateway       ga   # WebSocket gateway
-nest g library       lib  # کتابخونه داخل monorepo
-nest g sub-app       app  # اپ جدید داخل monorepo
-nest g configuration      # فایل کانفیگ CLI
+nest g library       lib  # monorepo کتابخونه داخل
+nest g sub-app       app  # monorepo اپ جدید داخل
+nest g configuration      # CLI فایل کانفیگ
 ```
 
 ### آپشن‌های مهم
