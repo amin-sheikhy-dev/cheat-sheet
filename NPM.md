@@ -438,7 +438,3 @@ export default config;
 
 /* import => layout.tsx */
 ```
-
-```tsx
-
-```

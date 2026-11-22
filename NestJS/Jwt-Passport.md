@@ -32,6 +32,17 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       // امضا را تایید می‌کند secret با این
       secretOrKey: config.getOrThrow('JWT_SECRET'),
     });
+
+    super({
+      // توکن از کوکی میگیره
+      jwtFromRequest: ExtractJwt.fromExtractors([(req: { cookies?: Record<string, string> }) => req?.cookies?.access_token ?? null]),
+
+      ignoreExpiration: false,
+
+      secretOrKey: config.getOrThrow('JWT_SECRET'),
+
+      passReqToCallback: false,
+    });
   }
 
   // گزاشته میشه req.user به عنوان req این چیزیه که داخل

@@ -3,6 +3,8 @@ import fs from 'node:fs';
 import fs from 'node:fs/promises'; // مدرن تر
 ```
 
+# readFile - writeFile
+
 ```ts
 const data = await fs.readFile('test.txt', 'utf-8');
 
@@ -16,6 +18,8 @@ const newData = data + ' World!';
 await fs.writeFile('test.txt', newData);
 ```
 
+# appendFile
+
 ```ts
 await fs.appendFile('test.txt', 'New log\n');
 // می‌خواهیم به انتهای فایل چیزی اضافه کنیم، بدون اینکه محتوای قبلی پاک شود
@@ -28,6 +32,8 @@ async function log(message: string) {
 await log('Server started');
 await log('User logged in');
 ```
+
+# unlink - rm
 
 ```ts
 await fs.unlink('test.txt'); // حذف فایل
@@ -50,6 +56,8 @@ await fs.rm('uploads', {
 });
 ```
 
+# mkdir
+
 ```ts
 await fs.mkdir('data');
 
@@ -57,6 +65,8 @@ await fs.mkdir('data/users/images'); // اگه پوشه های دیتا و یو�
 
 await fs.mkdir('data/users/images', { recursive: true }); // اینجوری ارور نمیده و پوشه هارو میسازه
 ```
+
+# readdir
 
 ```ts
 const files = await fs.readdir('data');
@@ -83,6 +93,8 @@ for (const item of items) {
 }
 ```
 
+# rename
+
 ```ts
 await fs.rename('data/old-name.txt', 'data/new-name.txt');
 // تغییر نام فایل یا پوشه - جابه‌جا کردن فایل یا پوشه
@@ -106,6 +118,8 @@ console.log(path.basename(filePath)); // users.json
 // پسوند فایل
 console.log(path.extname(filePath)); // .json
 ```
+
+# stat
 
 ```ts
 const info = await fs.stat('test.txt');
@@ -133,7 +147,7 @@ const info = await fs.stat('video.mp4');
 console.log(info.size); // 5242880 حجم
 ```
 
-### CRUD
+# CRUD
 
 ```ts
 async function getUsers() {

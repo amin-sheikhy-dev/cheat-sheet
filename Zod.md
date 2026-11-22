@@ -190,7 +190,7 @@ if (!result.success) {
 console.log(result.data);
 ```
 
-### تمرین جالب
+### مثال
 
 و `partial()` همه فیلدها را اختیاری می‌کند پس می‌توانی فقط `name` یا فقط `email` را بفرستی
 
@@ -205,5 +205,30 @@ export const updateUserSchema = z
   .partial()
   .refine((data) => Object.keys(data).length > 0, {
     message: 'At least one field must be provided',
+  });
+```
+
+```ts
+export const signupSchema = z.object({
+  email: z
+    .email({ error: 'لطفاً یک ایمیل معتبر وارد کنید.' })
+    .trim()
+    .transform((value) => value.toLowerCase()),
+
+  password: z
+    .string({ error: 'رمز عبور باید وارد شود.' })
+    .trim()
+    .min(8, { error: 'رمز عبور باید حداقل ۸ کاراکتر باشد.' })
+    .max(20, { error: 'رمز عبور نباید بیشتر از ۲۰ کاراکتر باشد.' }),
+});
+
+//
+
+export const verifyEmailSchema = signupSchema
+  .pick({
+    email: true,
+  })
+  .extend({
+    code: z.string().regex(/^\d{4}$/, 'کد باید ۴ رقمی باشد'),
   });
 ```

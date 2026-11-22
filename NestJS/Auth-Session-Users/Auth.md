@@ -40,6 +40,7 @@ import type { CookieOptions, Request, Response } from 'express';
 import { HttpAdapterHost } from '@nestjs/core';
 
 const REFRESH_COOKIE = 'refresh_token';
+const ACCESS_COOKIE = 'access_token';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -65,6 +66,16 @@ export class AuthController {
     };
   }
 
+  private get accessCookieOptions(): CookieSerializeOptions {
+    return {
+      httpOnly: true,
+      secure: this.config.get('NODE_ENV') === 'production',
+      sameSite: 'strict',
+      path: '/',
+      maxAge: Number(this.config.getOrThrow('JWT_ACCESS_TTL_MINUTES')) * 60, // second
+    };
+  }
+
   @Post('signup')
   @Throttle({ default: { ttl: 60_000, limit: 3 } })
   signup(@Body() userData: SignUpDto) {
@@ -81,8 +92,7 @@ export class AuthController {
     res.cookie(REFRESH_COOKIE, refreshToken, this.refreshCookieOptions);
     // روش بالا در صورتی که از ماژول های خود اکسپرس استفاه میکنی و پایین ماژول نیتیو نست
     this.adapterHost.httpAdapter.setCookie(res, REFRESH_COOKIE, refreshToken, this.refreshCookieOptions);
-
-    return { accessToken };
+    this.adapterHost.httpAdapter.setCookie(res, ACCESS_COOKIE, accessToken, this.accessCookieOptions);
   }
 
   @Post('signin')
@@ -95,8 +105,7 @@ export class AuthController {
     res.cookie(REFRESH_COOKIE, refreshToken, this.refreshCookieOptions);
     // روش بالا در صورتی که از ماژول های خود اکسپرس استفاه میکنی و پایین ماژول نیتیو نست
     this.adapterHost.httpAdapter.setCookie(res, REFRESH_COOKIE, refreshToken, this.refreshCookieOptions);
-
-    return { accessToken };
+    this.adapterHost.httpAdapter.setCookie(res, ACCESS_COOKIE, accessToken, this.accessCookieOptions);
   }
 
   @Post('refresh')
@@ -112,8 +121,7 @@ export class AuthController {
 
     res.cookie(REFRESH_COOKIE, refreshToken, this.refreshCookieOptions); // ماژول نیتیو اکسپرس
     this.adapterHost.httpAdapter.setCookie(res, REFRESH_COOKIE, refreshToken, this.refreshCookieOptions);
-
-    return { accessToken };
+    this.adapterHost.httpAdapter.setCookie(res, ACCESS_COOKIE, accessToken, this.accessCookieOptions);
   }
 
   @Post('signout')
@@ -127,7 +135,8 @@ export class AuthController {
     const { maxAge: _maxAge, ...clearOptions } = this.refreshCookieOptions; // ماژول نیتیو اکسپرس
 
     res.clearCookie(REFRESH_COOKIE, clearOptions); // ماژول نیتیو اکسپرس
-    this.adapterHost.httpAdapter.clearCookie(res, REFRESH_COOKIE, { path: '/auth' });
+    this.adapterHost.httpAdapter.setCookie(res, REFRESH_COOKIE, refreshToken, this.refreshCookieOptions);
+    this.adapterHost.httpAdapter.setCookie(res, ACCESS_COOKIE, accessToken, this.accessCookieOptions);
 
     return { message: 'logged out' };
   }
@@ -149,11 +158,10 @@ export class AuthController {
 # service
 
 ```ts
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { createHash, randomBytes, randomInt } from 'crypto';
-import { InjectRepository } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -185,7 +193,7 @@ export class AuthService {
       throw new BadRequestException('email already exists');
     }
 
-    const code: string = String(randomInt(1_000, 10_000));
+    const code: string = String(randomInt(0, 10_000)).padStart(4, '0');
 
     await this.otpRepo.upsert(
       {

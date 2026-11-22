@@ -1,10 +1,12 @@
-ایجاد
+# create
 
 ```ts
 const user = userRepo.create({ name: 'Amin', email: 'amin@example.com' });
 
 await userRepo.save(user);
 ```
+
+# find
 
 گرفتن همه
 
@@ -35,9 +37,13 @@ const user = await userRepo.findOne({
 });
 ```
 
----
+وجود داشتن یا نداشتن رو چک میکنه و فقط بولین ریترن میکنه
 
-اپدیت
+```ts
+await roomRepo.existsBy({ roomNumber: id });
+```
+
+# update
 
 بر اساس ابجکت اول پیدا میکنه و مقادیر دوم رو جایگزین میکنه
 
@@ -71,6 +77,8 @@ await resetRepo.upsert(
 );
 ```
 
+# increment - decrement
+
 کاهش افزایش
 
 ```ts
@@ -80,9 +88,7 @@ await userRepo.increment({ id: userId }, 'points', 10);
 await productRepo.decrement({ id: productId }, 'stock', quantity);
 ```
 
----
-
-حذف
+# delete
 
 ```ts
 await otpRepo.delete({ email });
@@ -96,12 +102,6 @@ const user = await userRepo.findOne({
 if (user) {
   await userRepo.remove(user);
 }
-```
-
-وجود داشتن یا نداشتن رو چک میکنه و فقط بولین ریترن میکنه
-
-```ts
-await roomRepo.existsBy({ roomNumber: id });
 ```
 
 ---

@@ -1,87 +1,86 @@
-# Nest Exceptions & Status Codes
+# ✅ 2xx — موفق
 
-✅ 2xx — موفق
-───────────────
+> `200 OK` ➡️ درخواست موفق
 
-- `200 OK` ➡️ درخواست موفق
-- `201 Created` ➡️ ایجاد شد
-- `204 No Content` ➡️ موفق ولی چیزی برنمیگرده
+> `201 Created` ➡️ ایجاد شد
 
-🔀 3xx — ریدایرکت
-───────────────────
+> `204 No Content` ➡️ موفق ولی چیزی برنمیگرده
 
-- `301 Moved Permanently` ➡️ منتقل شده دائمی
-- `302 Found` ➡️ منتقل شده موقت
-- `304 Not Modified` ➡️ کش معتبره
+# 🔀 3xx — ریدایرکت
 
-⚠️ 4xx — خطای کلاینت
-──────────────────────────────────────────────────────────────────
+> `301 Moved Permanently` ➡️ منتقل شده دائمی
 
-- `400 Bad Request` ➡️ ورودی اشتباه ولیدیشن خطا
+> `302 Found` ➡️ منتقل شده موقت
 
-  > BadRequestException()
+> `304 Not Modified` ➡️ کش معتبره
 
-- `401 Unauthorized` ➡️ توکن نداره یا نامعتبره
+# ⚠️ 4xx — خطای کلاینت
 
-  > UnauthorizedException()
+> `400 Bad Request` ➡️ ورودی اشتباه ولیدیشن خطا
 
-- `403 Forbidden` ➡️ توکن داره ولی دسترسی نداره
+- BadRequestException()
 
-  > ForbiddenException()
+> `401 Unauthorized` ➡️ توکن نداره یا نامعتبره
 
-- `404 Not Found` ➡️ رکورد یا روت پیدا نشد
+- UnauthorizedException()
 
-  > NotFoundException()
+> `403 Forbidden` ➡️ توکن داره ولی دسترسی نداره
 
-- `405 Method Not Allowed` ➡️ متد HTTP اشتباه
+- ForbiddenException()
 
-  > MethodNotAllowedException()
+> `404 Not Found` ➡️ رکورد یا روت پیدا نشد
 
-- `408 Request Timeout` ➡️ timeout شد
+- NotFoundException()
 
-  > RequestTimeoutException()
+> `405 Method Not Allowed` ➡️ متد HTTP اشتباه
 
-- `409 Conflict` ➡️ تکراری مثلاً ایمیل
+- MethodNotAllowedException()
 
-  > ConflictException()
+> `408 Request Timeout` ➡️ timeout شد
 
-- `413 Payload Too Large` ➡️ سایز ریکوئست زیاده
+- RequestTimeoutException()
 
-  > PayloadTooLargeException()
+> `409 Conflict` ➡️ تکراری مثلاً ایمیل
 
-- `415 Unsupported Media` ➡️ Content-Type اشتباه
+- ConflictException()
 
-  > UnsupportedMediaTypeException()
+> `413 Payload Too Large` ➡️ سایز ریکوئست زیاده
 
-- `422 Unprocessable` ➡️ ساختار درسته ولی داده نامعتبره
+- PayloadTooLargeException()
 
-  > UnprocessableEntityException()
+> `415 Unsupported Media` ➡️ Content-Type اشتباه
 
-- `429 Too Many Requests` ➡️ throttle زیاد ریکوئست زده
-  > TooManyRequestsException()
+- UnsupportedMediaTypeException()
 
-🔥 5xx — خطای سرور
-──────────────────────────────────────────────────────────────────
+> `422 Unprocessable` ➡️ ساختار درسته ولی داده نامعتبره
 
-- `500 Internal Server Error` ➡️ خطای سرور
+- UnprocessableEntityException()
 
-  > InternalServerErrorException()
+> `429 Too Many Requests` ➡️ throttle زیاد ریکوئست زده
 
-- `501 Not Implemented` ➡️ هنوز پیاده‌سازی نشده
+- TooManyRequestsException()
 
-  > NotImplementedException()
+# 🔥 5xx — خطای سرور
 
-- `502 Bad Gateway` ➡️ سرویس upstream خطا داد
+> `500 Internal Server Error` ➡️ خطای سرور
 
-  > BadGatewayException()
+- InternalServerErrorException()
 
-- `503 Service Unavailable` ➡️ سرور موقتاً در دسترس نیست
+> `501 Not Implemented` ➡️ هنوز پیاده‌سازی نشده
 
-  > ServiceUnavailableException()
+- NotImplementedException()
 
-- `504 Gateway Timeout` ➡️ upstream timeout شد
+> `502 Bad Gateway` ➡️ سرویس upstream خطا داد
 
-  > GatewayTimeoutException()
+- BadGatewayException()
+
+> `503 Service Unavailable` ➡️ سرور موقتاً در دسترس نیست
+
+- ServiceUnavailableException()
+
+> `504 Gateway Timeout` ➡️ upstream timeout شد
+
+- GatewayTimeoutException()
 
 ---
 
