@@ -50,7 +50,7 @@ await roomRepo.existsBy({ roomNumber: id });
 ```ts
 await userRepo.update(1, { name: 'Amin Sheikhy' });
 
-return sessionRepo.update({ userId: userId, revokedAt: IsNull() }, { revokedAt: new Date() });
+await sessionRepo.update({ userId: userId, revokedAt: IsNull() }, { revokedAt: new Date() });
 ```
 
 بر اساس این ایمیل تصمیم میگیره اگه از قبل وجود داشت اپیدیتش کنه اگه نبود ایجاد کنه
