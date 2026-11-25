@@ -7,5 +7,12 @@
 
 issues در zod
 
-session storage
-local storage
+session storage - local storage
+
+omit type - pick type , ...
+
+gregorianToJalali - jalaliToGregorianw
+
+tree -a -I 'node_modules|.git'
+
+update calender

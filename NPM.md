@@ -270,10 +270,18 @@ npm i next-client-cookies
 npm i next-intl
 ```
 
-## Jalali Date
+## Date Library
 
 ```bash
 npm i date-fns-jalali
+```
+
+```bash
+npm i date-fns
+```
+
+```bash
+npm i jalaali-js
 ```
 
 ## TypeScript (Global)
