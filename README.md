@@ -9,10 +9,18 @@ issues در zod
 
 session storage - local storage
 
-omit type - pick type , ...
-
 gregorianToJalali - jalaliToGregorianw
 
-tree -a -I 'node_modules|.git'
-
 update calender
+
+```tsx
+export type DateRange = {
+  checkIn: string | null;
+  checkOut: string | null;
+};
+
+type CalendarProps = {
+  dateRange: DateRange;
+  setDateRange: Dispatch<SetStateAction<DateRange>>;
+};
+```
